@@ -19,31 +19,26 @@ public class Main {
         ArrayList<Box> blocks = new ArrayList<Box>();
         for(int i = 0; i < size_of_screen/2; i++)
             blocks.add(new Free_Box(0));
-        blocks.add(new Box(1));
+        blocks.add(new Box(1, false));
+        for(int i = 0; i < size_of_screen/2; i++)
+            blocks.add(new Free_Box(0));
 
 
         while (true) {
+                            //  *********** press button ***********   \\
 
-            //  do block work
-            Box test = (blocks.get(index_of_player));
-            Box.box_work();
-
-            //  check player alive
-            if(Player.is_he_alive(index_of_player))
-                continue;
-            else
-                Main.end_game();
-
-
+            //  for generate new random block
             final int number_of_block_mode = 5;
-            int type_of_box = rand.nextInt(10) % number_of_block_mode;  // for generate random number to new block
+            int type_of_box = rand.nextInt(10) % number_of_block_mode;
+            boolean is_enemy = rand.nextBoolean();
+
             //  create new block
             switch (type_of_box) {
                 case 0:
                     blocks.add(new Free_Box(type_of_box));
                     break;
                 case 1:
-                    blocks.add(new Box(type_of_box));
+                    blocks.add(new Box(type_of_box, is_enemy));
                     break;
                 case 2:
                     blocks.add(new Fire_box(type_of_box));
@@ -53,12 +48,20 @@ public class Main {
                     break;
                 case 4:
                     blocks.add(new Time_Box(type_of_box));
-
             }
+            blocks.removeFirst();
+
+
+            //  check what happens to the player?
+            Player.Is_he_Damaged(1);
+
+
+
 
         }
     }
 
+    //  for ending game
     public static void end_game(){
         System.out.println(123);
     }
